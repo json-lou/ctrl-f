@@ -2,19 +2,13 @@
   <q-page padding class="column justify-center">
     <notes-layout :transcript="transcript"/>
     <div class="row justify-center">
-      <h5 style="margin-bottom: 10px;">results for <a class="text-secondary">{{ query }}</a></h5>
+      <h5 style="margin-bottom: 10px;">results for <a class="text-secondary">{{ keyword }}</a></h5>
     </div>
     <div class="row justify-center">
       <video-player :url="url" :timestamp="timestamps[selected]" class="q-my-lg"/>
     </div>
     <!-- TIMESTAMP NAVI -->
-    <div class="row justify-center items-center">
-      <q-btn
-        v-if="selected == 0"
-        style="cursor: default;"
-        class="no-shadow q-mx-md"
-        color="white"
-        round/>
+    <div class="row justify-center items-center" style="margin-bottom: 20px;">
       <q-btn
         v-if="selected > 0"
         class="no-shadow q-mx-md"
@@ -36,11 +30,6 @@
         round push icon="navigate_next"
         @click="updateSelected(selected + 1)"/>
     </div>
-    <div class="row justify-center">
-      <p v-if="timestamps.length > 0" class="text-grey">{{ selected }} of {{ timestamps.length }}</p>
-      <p v-else>No keyword matches found!</p>
-    </div>
-    <q-item-separator/>
 
     <div class="row justify-center">
       <h5>Explore</h5>
@@ -87,30 +76,18 @@ export default {
   },
   data () {
     return {
-      query: 'financial',
+      keyword: 'kanye',
       url: 'https://www.youtube.com/embed/biFlrzTJets',
       selected: 0,
-      timestamps: [], // given in seconds
+      timestamps: [ 0, 60, 120, 180, 240, 300, 360 ], // given in seconds
       transcript: '',
-      suggestions: []
+      suggestions: [ 'algebra', 'calculus' ] // array of strings
     }
   },
   methods: {
-    async getTimestamps () {
+    getTimestamps () {
       // get request
-      let response = await fetch('http://localhost:3001/timestamps/' + 'hello/' + this.$data.query)
-      let jsonData = await response.json()
-      this.$data.timestamps = jsonData
-      console.log('Timestamps', this.$data.timestamps)
-    },
-    async getTranscript () {
-      let response = await fetch('http://localhost:3001/transcripts/' + 'hello/')
-      let jsonData = await response.json()
-      this.$data.transcript = jsonData
-      console.log('Transcript', this.$data.transcript)
-      // let jsonData = await response.json()
-      // this.$data.transcript = jsonData
-      // console.log('Transcript', this.$data.transcript)
+      console.log('fetch timestamps')
     },
     updateSelected (i) {
       this.$data.selected = i
@@ -120,10 +97,7 @@ export default {
       // get request with keyword, url
     }
   },
-  created () {
-    this.getTimestamps()
-    this.getTranscript()
-  }
+  created () { this.getTimestamps() }
 }
 </script>
 
