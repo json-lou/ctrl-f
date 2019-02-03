@@ -10,9 +10,10 @@
 
       <a href="https://github.com/json-lou/qhacks-2019" target="_blank">
         <q-btn
+          @click="drawerL = !drawerL"
           color="primary"
           flat round dense
-          icon="description"
+          icon="bookmark_border"
         />
       </a>
       <q-toolbar-title style="text-align: center;">
@@ -21,13 +22,21 @@
         </a>
       </q-toolbar-title>
       <q-btn
-        @click="drawer = !drawer"
+        @click="drawerR = !drawerR"
         color="primary"
         flat round dense
-        icon="menu"
+        icon="description"
       />
     </q-toolbar>
-    <q-layout-drawer v-model="drawer" side="right">
+    <q-layout-drawer v-model="drawerL" side="left">
+      <q-scroll-area class="fit">
+        <q-list-header>Capture</q-list-header>
+        <q-item v-for="pic in screenshots" :key="pic">
+          <img :src="pic"/> <!-- fix later ================================== -->
+        </q-item>
+      </q-scroll-area>
+    </q-layout-drawer>
+    <q-layout-drawer v-model="drawerR" side="right">
       <q-scroll-area class="fit">
         <q-list-header>Transcript</q-list-header>
         <q-item>
@@ -41,10 +50,11 @@
 <script>
 export default {
   name: 'NotesLayout',
-  props: [ 'transcript' ],
+  props: [ 'transcript', 'screenshots' ],
   data () {
     return {
-      drawer: true
+      drawerL: true,
+      drawerR: true
     }
   }
 }
