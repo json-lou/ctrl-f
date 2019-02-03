@@ -65,7 +65,5 @@ collection_timestamps.insert_one(myRecognizeCallback.my_data)
 formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript})
 print('This is the formatted transcript:')
 print(formattedText.text)
-
-# push formatted text
-# push data object
+collection_transcripts.insert_one(formattedText.text)
 
