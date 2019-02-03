@@ -53,8 +53,8 @@ class MyRecognizeCallback(RecognizeCallback):
 myRecognizeCallback = MyRecognizeCallback()
 
 
-def addToDatabase(filename, youtube_id):
-    with open(join(dirname(__file__), './.', filename), 'rb') as audio_file:
+def addToDatabase(file, youtube_id):
+    with open(join(dirname(__file__), './.', file), 'rb') as audio_file:
         audio_source = AudioSource(audio_file)
         speech_to_text.recognize_using_websocket(
             audio=audio_source,
