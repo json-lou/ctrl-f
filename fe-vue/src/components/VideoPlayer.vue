@@ -2,9 +2,9 @@
   <div class="q-video">
     <iframe
       style="width: 853px; height: 480px;"
-      :src="url + '?start=' + timestamp"
+      :src="url + '?start=' + timestamp + '&autoplay=1'"
       frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+      allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture">
     </iframe>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <q-field>
-    <q-input
+    <q-search
       v-model="keyword"
       type="text"
       float-label="Keyword"
