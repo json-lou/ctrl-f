@@ -4,7 +4,7 @@
       style="width: 853px; height: 480px;"
       :src="url + '?start=' + timestamp + '&autoplay=1'"
       frameborder="0"
-      allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture">
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
     </iframe>
   </div>
 </template>
