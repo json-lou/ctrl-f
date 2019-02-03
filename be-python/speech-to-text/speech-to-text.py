@@ -3,8 +3,17 @@ from watson_developer_cloud.websocket import RecognizeCallback, AudioSource
 from os.path import join, dirname
 from pymongo import MongoClient
 
+from freq_words import addKeywordsToDatabase
+
 import json
 import requests
+import sys
+
+
+# Command line arguments
+
+my_file = str(sys.argv)[0]
+youtube_id = str(sys.argv)[1]
 
 
 # Watson speech-to-text
@@ -56,20 +65,21 @@ def addToDatabase(file, youtube_id):
             model='en-US_BroadbandModel',
             max_alternatives=0)
 
-
     try:
         print('This is the data object:')
         myRecognizeCallback.my_data['youtube_id'] = youtube_id
         print(myRecognizeCallback.my_data)
         collection_timestamps.insert_one(myRecognizeCallback.my_data)
 
-        formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript})
+        formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript, 'youtube_id': youtube_id})
         print('This is the formatted transcript:')
         my_transcript = {'transcript': formattedText.text}
         print(formattedText.text)
         collection_transcripts.insert_one(my_transcript)
+
+        addKeywordsToDatabase(formattedText.text, youtube_id)
     except:
         print("Can't connect to database")
 
 
-addToDatabase('sample.flac', 'TEST_ID')
+addToDatabase(my_file, youtube_id)

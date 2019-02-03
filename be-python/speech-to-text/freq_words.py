@@ -8,6 +8,10 @@ Created on Sat Feb  2 13:17:06 2019
 from nltk.corpus import stopwords 
 from nltk.tokenize import word_tokenize
 
+import sys
+
+unformatted_text = str(sys.argv)[0]
+youtube_id = str(sys.argv)[1]
   
 example_sent = "Hey so let's get started us so welcome to the second of the learning how to learn seminar series %HESITATION if you don't know my name is Dan well took and I'm a lecturer here and the faculty of mathematics and today I have the pleasure to talk to you about how to think about your thinking so I'm a lot of people I consider this ability to think about your thinking to be one of the most important skills you can have in every aspect of your life of course for our purposes today I will mostly focus on how we can use thinking about your thinking out super improve your academics so first a question for you %HESITATION how many of you have experienced this "
   
@@ -17,7 +21,8 @@ word_tokens = word_tokenize(example_sent)
   
 filtered_sentence = [w for w in word_tokens if not w in stop_words] 
   
-filtered_sentence = [] 
+filtered_sentence = []
+
   
 for w in word_tokens:
     if w == "HESITATION" or w == "%" or w == "I" or w == "'m":
@@ -52,3 +57,13 @@ for i in range(min(10, len(counts))):
 
 # Prints out array without stop words
 print(filtered_sentence) 
+
+
+# MongoDB instance
+client = MongoClient('mongodb+srv://qhacks:qhacks@cluster0-brdw1.mongodb.net/test?retryWrites=true')
+db = client['qhacks']
+collection_keywords = db['keywords']
+
+def addKeywordsToDatabase(filtered, youtube_id):
+  returnObject = {'keywords': filtered, 'youtube_id': youtube_id}
+  collection_keywords.insert_one(returnObject)
