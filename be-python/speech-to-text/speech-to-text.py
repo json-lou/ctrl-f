@@ -67,9 +67,13 @@ def addToDatabase(file, youtube_id):
 
     try:
         print('This is the data object:')
-        myRecognizeCallback.my_data['youtube_id'] = youtube_id
-        print(myRecognizeCallback.my_data)
-        collection_timestamps.insert_one(myRecognizeCallback.my_data)
+        final_data = []
+        for result in myRecognizeCallback.my_data['results']:
+            for element in myRecognizeCallback.my_data['alternatives'][0]['timestamps']:
+                final_data.append(element)
+        final_data['youtube_id'] = youtube_id
+        print(final_data)
+        collection_timestamps.insert_one(final_data)
 
         formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript, 'youtube_id': youtube_id})
         print('This is the formatted transcript:')
@@ -77,7 +81,7 @@ def addToDatabase(file, youtube_id):
         print(formattedText.text)
         collection_transcripts.insert_one(my_transcript)
 
-        addKeywordsToDatabase(formattedText.text, youtube_id)
+        # addKeywordsToDatabase(formattedText.text, youtube_id)
     except:
         print("Can't connect to database")
 
