@@ -5,8 +5,7 @@
       type="text"
       float-label="Keyword"
       inverted
-      class="no-shadow"
-      style="width: 750px; height: 70px;"/>
+      class="no-shadow"/>
     <q-input
       v-model="videoURL"
       type="text"
