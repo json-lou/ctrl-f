@@ -3,7 +3,7 @@ from watson_developer_cloud.websocket import RecognizeCallback, AudioSource
 from os.path import join, dirname
 from pymongo import MongoClient
 
-from freq_words import addKeywordsToDatabase
+# from freq_words import addKeywordsToDatabase
 
 import json
 import requests
