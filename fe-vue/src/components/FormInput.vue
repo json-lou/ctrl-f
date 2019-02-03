@@ -9,7 +9,7 @@
     <q-input
       v-model="videoURL"
       type="text"
-      float-label="Youtube link"
+      float-label="YouTube link"
       color="secondary"
       style="margin: 10px 0;"/>
     <q-btn
