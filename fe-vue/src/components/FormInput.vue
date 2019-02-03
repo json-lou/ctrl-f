@@ -1,7 +1,7 @@
 <template>
   <q-field>
     <q-search
-      v-model="keyword"
+      v-model="infoState"
       type="text"
       float-label="Keyword"
       inverted
@@ -41,6 +41,12 @@ export default {
       // let res = getYoutubeId('http://www.youtube.com/watch?v=zbYf5_S7oJo')
       // console.log(res)
       this.$router.push('notes')
+    }
+  },
+  computed: {
+    infoState: {
+      get () { return this.$store.state.info.query },
+      set (val) { this.$store.commit('info/updateQueryState', val) }
     }
   }
 }

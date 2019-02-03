@@ -2,13 +2,19 @@
   <q-page padding class="column justify-center">
     <notes-layout :transcript="transcript"/>
     <div class="row justify-center">
-      <h5 style="margin-bottom: 10px;">results for <a class="text-secondary">{{ keyword }}</a></h5>
+      <h5 style="margin-bottom: 10px;">results for <a class="text-secondary">{{ query }}</a></h5>
     </div>
     <div class="row justify-center">
       <video-player :url="url" :timestamp="timestamps[selected]" class="q-my-lg"/>
     </div>
     <!-- TIMESTAMP NAVI -->
-    <div class="row justify-center items-center" style="margin-bottom: 20px;">
+    <div class="row justify-center items-center">
+      <q-btn
+        v-if="selected == 0"
+        style="cursor: default;"
+        class="no-shadow q-mx-md"
+        color="white"
+        round/>
       <q-btn
         v-if="selected > 0"
         class="no-shadow q-mx-md"
@@ -29,12 +35,25 @@
         color="secondary"
         round push icon="navigate_next"
         @click="updateSelected(selected + 1)"/>
+      <q-btn
+        v-if="timestamps.length == 1 || selected == timestamps.length - 1"
+        style="cursor: default;"
+        class="no-shadow q-mx-md"
+        color="white"
+        round/>
     </div>
+
+    <div class="row justify-center">
+      <p v-if="timestamps.length > 0" class="text-grey">{{ selected }} of {{ timestamps.length }}</p>
+      <p v-else>No keyword matches found!</p>
+    </div>
+
+    <q-item-separator/>
 
     <div class="row justify-center">
       <h5>Explore</h5>
     </div>
-    <div class="row justify-center" style="margin-bottom: 10px;">
+    <!-- <div class="row justify-center" style="margin-bottom: 10px;">
       <q-btn
         v-for="suggestion in suggestions"
         :key="suggestion"
@@ -42,7 +61,7 @@
         color="secondary"
         class="no-shadow q-mx-xs"
         outline rounded/>
-    </div>
+    </div> -->
     <div class="row justify-center">
       <q-search
         float-label="Try another topic"
@@ -76,18 +95,26 @@ export default {
   },
   data () {
     return {
-      keyword: 'kanye',
-      url: 'https://www.youtube.com/embed/biFlrzTJets',
+      query: this.$store.state.info.queryState,
+      url: 'https://www.youtube.com/embed/84YfHc19-Jw',
       selected: 0,
-      timestamps: [ 0, 60, 120, 180, 240, 300, 360 ], // given in seconds
+      timestamps: [], // given in seconds
       transcript: '',
-      suggestions: [ 'algebra', 'calculus' ] // array of strings
+      suggestions: [] // array of strings
     }
   },
   methods: {
-    getTimestamps () {
-      // get request
-      console.log('fetch timestamps')
+    async getTimestamps () {
+      let response = await fetch('http://localhost:3001/timestamps/' + 'hello/' + this.$store.state.info.queryState)
+      let jsonData = await response.json()
+      this.$data.timestamps = jsonData
+      console.log('Timestamps', this.$data.timestamps)
+    },
+    async getTranscript () {
+      let response = await fetch('http://localhost:3001/transcripts/' + 'hello/')
+      let jsonData = await response.json()
+      this.$data.transcript = jsonData
+      console.log('Transcript', this.$data.transcript)
     },
     updateSelected (i) {
       this.$data.selected = i
@@ -97,7 +124,16 @@ export default {
       // get request with keyword, url
     }
   },
-  created () { this.getTimestamps() }
+  created () {
+    this.getTimestamps()
+    this.getTranscript()
+  },
+  computed: {
+    infoState: {
+      get () { return this.$store.state.info.queryState },
+      set (val) { this.$store.commit('info/updateQueryState', val) }
+    }
+  }
 }
 </script>
 
