@@ -72,10 +72,9 @@ def addToDatabase(file, youtube_id):
         final_data = []
         for result in myRecognizeCallback.my_data['results']:
             for element in result['alternatives'][0]['timestamps']:
-                final_data.append(element)
-        final_final_data = {'timestamps': final_data, 'youtube_id': youtube_id}
-        print(final_final_data)
-        collection_timestamps.insert_one(final_final_data)
+                final_data.append({'keyword': element[0], 'secs': element[1], 'youtube_id': youtube_id})
+        print(final_data)
+        collection_timestamps.insert_many(final_data)
     except:
         print("Can't connect to timestamp database")
 
