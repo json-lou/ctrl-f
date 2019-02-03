@@ -69,7 +69,7 @@ def addToDatabase(file, youtube_id):
         print(formattedText.text)
         collection_transcripts.insert_one(my_transcript)
     except:
-        print('Can't connect to database')
+        print("Can't connect to database")
 
 
 addToDatabase('sample.flac', 'TEST_ID')
