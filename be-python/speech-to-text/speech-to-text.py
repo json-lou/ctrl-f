@@ -85,5 +85,5 @@ def addToDatabase(filename, youtube_id):
     except:
         print("Can't connect to database")
 
-
+print(my_file)
 addToDatabase(my_file, youtube_id)
