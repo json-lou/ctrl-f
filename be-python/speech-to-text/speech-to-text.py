@@ -65,10 +65,11 @@ def addToDatabase(file, youtube_id):
 
         formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript})
         print('This is the formatted transcript:')
+        my_transcript = {'transcript': formattedText.text}
         print(formattedText.text)
-        collection_transcripts.insert_one(formattedText.text)
+        collection_transcripts.insert_one(my_transcript)
     except:
-        print('Cant connect to database')
+        print('Can't connect to database')
 
 
 addToDatabase('sample.flac', 'TEST_ID')
