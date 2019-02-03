@@ -34,7 +34,9 @@
     <div class="row justify-center">
       <q-search
         float-label="Try another topic"
-        color="secondary"/>
+        class="no-shadow"
+        style="width: 500px; height:60px; margin-top: 20px;"
+        inverted/>
     </div>
     <div class="row justify-center">
       <q-btn

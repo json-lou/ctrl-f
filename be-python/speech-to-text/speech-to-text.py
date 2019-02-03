@@ -44,26 +44,31 @@ class MyRecognizeCallback(RecognizeCallback):
 myRecognizeCallback = MyRecognizeCallback()
 
 
-with open(join(dirname(__file__), './.', 'sample.flac'), 'rb') as audio_file:
-    audio_source = AudioSource(audio_file)
-    speech_to_text.recognize_using_websocket(
-        audio=audio_source,
-        content_type='audio/flac',
-        recognize_callback=myRecognizeCallback,
-        smart_formatting=True,
-        timestamps=True,
-        model='en-US_BroadbandModel',
-        max_alternatives=0)
+def addToDatabase(file, youtube_id):
+    with open(join(dirname(__file__), './.', file), 'rb') as audio_file:
+        audio_source = AudioSource(audio_file)
+        speech_to_text.recognize_using_websocket(
+            audio=audio_source,
+            content_type='audio/flac',
+            recognize_callback=myRecognizeCallback,
+            smart_formatting=True,
+            timestamps=True,
+            model='en-US_BroadbandModel',
+            max_alternatives=0)
 
 
+    try:
+        print('This is the data object:')
+        myRecognizeCallback.my_data['youtube_id'] = youtube_id
+        print(myRecognizeCallback.my_data)
+        collection_timestamps.insert_one(myRecognizeCallback.my_data)
 
-print('This is the data object:')
-print(myRecognizeCallback.my_data)
-collection_timestamps.insert_one(myRecognizeCallback.my_data)
+        formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript})
+        print('This is the formatted transcript:')
+        print(formattedText.text)
+        collection_transcripts.insert_one(formattedText.text)
+    except:
+        print('Cant connect to database')
 
 
-formattedText = requests.post('http://bark.phon.ioc.ee/punctuator', data={'text': myRecognizeCallback.my_transcript})
-print('This is the formatted transcript:')
-print(formattedText.text)
-collection_transcripts.insert_one(formattedText.text)
-
+addToDatabase('sample.flac', 'TEST_ID')
