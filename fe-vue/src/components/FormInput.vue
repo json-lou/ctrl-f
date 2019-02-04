@@ -1,13 +1,13 @@
 <template>
   <q-field>
     <q-search
-      v-model="infoState"
+      v-model="keywordState"
       type="text"
       float-label="Keyword"
       inverted
       class="no-shadow"/>
     <q-input
-      v-model="videoURL"
+      v-model="urlState"
       type="text"
       float-label="YouTube link"
       color="secondary"
@@ -28,25 +28,19 @@
 
 export default {
   name: 'FormComponent',
-  data () {
-    return {
-      keyword: '',
-      videoURL: '' // embeded youtube url for now
-    }
-  },
   methods: {
     onSubmit () {
-      console.log(this.$data)
-      // post request
-      // let res = getYoutubeId('http://www.youtube.com/watch?v=zbYf5_S7oJo')
-      // console.log(res)
-      this.$router.push('notes')
+      this.$router.push('results')
     }
   },
   computed: {
-    infoState: {
-      get () { return this.$store.state.info.query },
-      set (val) { this.$store.commit('info/updateQueryState', val) }
+    keywordState: {
+      get () { return this.$store.state.keyword.keywordState },
+      set (val) { this.$store.commit('keyword/updateKeywordState', val) }
+    },
+    urlState: {
+      get () { return this.$store.state.url.urlState },
+      set (val) { this.$store.commit('url/updateUrlState', val) }
     }
   }
 }

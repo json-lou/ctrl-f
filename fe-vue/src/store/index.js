@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// we first import the module
-import info from './info'
+import keyword from './keyword'
+import url from './url'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-  modules: {
-    info
-  }
+  modules: { keyword, url }
 })
 
 export default store
