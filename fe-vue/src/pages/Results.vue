@@ -1,16 +1,22 @@
 <template>
   <q-page padding class="column justify-center">
-    <results-layout :transcript="transcript"/>
-    <div class="row justify-center">
-      <h5 style="margin-bottom: 10px;">
-        Results for
-        <a class="text-secondary"><strong>{{ this.$store.state.keyword.keywordState }}</strong></a>
-      </h5>
-    </div>
 
-    <!-- video player -->
-    <div class="row justify-center">
-      <video-player :timestamp="timestamps[selected]" class="q-my-lg"/>
+    <results-layout :transcript="transcript"/>
+
+    <div v-if="timestamps.length > 0">
+      <div class="row justify-center">
+        <h5 style="margin-bottom: 10px;">
+          Results for
+          <a class="text-secondary">
+            <strong>{{ this.$store.state.keyword.keywordState }}</strong>
+          </a>
+        </h5>
+      </div>
+
+      <!-- video player -->
+      <div v-if="timestamps.length > 0" class="row justify-center">
+        <video-player :timestamp="timestamps[selected]" class="q-my-lg"/>
+      </div>
     </div>
 
     <!-- timestamp navigation -->
@@ -21,14 +27,16 @@
         style="cursor: default;"
         class="no-shadow q-mx-md"
         color="white"
-        round/>
+        round
+      />
       <!-- show previous button -->
       <q-btn
         v-if="selected > 0"
         class="no-shadow q-mx-md"
         color="secondary"
         round push icon="navigate_before"
-        @click="updateSelected(selected - 1)"/>
+        @click="updateSelected(selected - 1)"
+      />
       <!-- navigation buttons -->
       <q-btn
         v-for="i in timestamps.length"
@@ -37,21 +45,24 @@
         color="tertiary"
         round
         style="width: 15px; height: 15px;"
-        @click="updateSelected(i - 1)"/>
+        @click="updateSelected(i - 1)"
+      />
       <!-- show next button -->
       <q-btn
         v-if="selected < timestamps.length - 1"
         class="no-shadow q-mx-md"
         color="secondary"
         round push icon="navigate_next"
-        @click="updateSelected(selected + 1)"/>
+        @click="updateSelected(selected + 1)"
+      />
       <!-- hide next button if on last index -->
       <q-btn
         v-if="timestamps.length == 1 || selected == timestamps.length - 1"
         style="cursor: default;"
         class="no-shadow q-mx-md"
         color="white"
-        round/>
+        round
+      />
     </div>
 
     <div class="row justify-center">
@@ -74,7 +85,7 @@ export default {
   data () {
     return {
       selected: 0,
-      timestamps: [], // given in seconds
+      timestamps: [], // in seconds
       transcript: ''
     }
   },

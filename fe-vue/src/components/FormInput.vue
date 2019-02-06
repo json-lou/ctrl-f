@@ -5,21 +5,14 @@
       type="text"
       float-label="Keyword"
       inverted
-      class="no-shadow"/>
+      class="no-shadow"
+    />
     <q-input
       v-model="urlState"
       type="text"
       float-label="YouTube link"
       color="secondary"
-      style="margin: 10px 0;"/>
-    <q-btn
-      label="Ctrl+F"
-      color="secondary"
-      class="no-shadow"
-      size="lg"
-      rounded push
-      style="margin-top: 40px;"
-      @click="onSubmit"
+      style="margin: 10px 0;"
     />
   </q-field>
 </template>
@@ -44,15 +37,4 @@ export default {
     }
   }
 }
-
-// function getYouTubeID (url) {
-//   var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/
-//   var match = url.match(regExp)
-
-//   if (match && match[2].length === 11) {
-//     return match[2]
-//   } else {
-//     return 'error'
-//   }
-// }
 </script>

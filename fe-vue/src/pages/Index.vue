@@ -1,10 +1,18 @@
 <template>
   <q-page padding class="flex flex-center">
-    <div class="container fill"
-         style="width: 70vh; max-height: 100vh; text-align: center;">
+    <div class="container fill" style="width: 70vh; max-height: 100vh; text-align: center;">
       <h1 class="q-ma-none">Ctrl-F</h1>
       <h5>Want to only watch the important parts of your video? Enter your keywords below!</h5>
       <form-input/>
+      <q-btn
+        to="/results"
+        label="Ctrl+F"
+        color="secondary"
+        class="no-shadow"
+        size="lg"
+        rounded push
+        style="margin-top: 40px;"
+      />
     </div>
   </q-page>
 </template>

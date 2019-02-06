@@ -6,7 +6,8 @@
              border-color: lightgrey;
              border-width: 0.5px;
              position: absolute;
-             top: 0; left: 0;">
+             top: 0; left: 0;"
+    >
       <q-btn
         @click="drawerL = !drawerL"
         color="primary"
