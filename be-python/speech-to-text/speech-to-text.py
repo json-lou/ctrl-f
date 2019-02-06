@@ -28,7 +28,7 @@ speech_to_text.disable_SSL_verification()
 
 # MongoDB instance
 
-client = MongoClient('mongodb+srv://qhacks:qhacks@cluster0-brdw1.mongodb.net/test?retryWrites=true')
+client = MongoClient('mongodb+srv://qhacks:<PASSWORD>@cluster0-brdw1.mongodb.net/test?retryWrites=true')
 db = client['qhacks']
 collection_timestamps = db['timestamps']
 collection_transcripts = db['transcripts']

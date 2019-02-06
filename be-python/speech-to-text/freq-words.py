@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Feb  2 13:17:06 2019
-
-@author: rk549
-"""
-
 from nltk.tokenize import word_tokenize
 
 from pymongo import MongoClient
@@ -28,10 +21,10 @@ def returnFiltered(unfiltered):
 
 
   for w in word_tokens:
-      if w == "HESITATION" or w == "%" or w == "I" or w == "'m":
-          continue
-      elif w not in stop_words:
-          filtered_sentence.append(w)
+    if w == "HESITATION" or w == "%" or w == "I" or w == "'m":
+      continue
+    elif w not in stop_words:
+      filtered_sentence.append(w)
 
   words = filtered_sentence
 
@@ -64,7 +57,7 @@ def returnFiltered(unfiltered):
 
 
 # MongoDB instance
-client = MongoClient('mongodb+srv://qhacks:qhacks@cluster0-brdw1.mongodb.net/test?retryWrites=true')
+client = MongoClient('mongodb+srv://qhacks:<PASSWORD>@cluster0-brdw1.mongodb.net/test?retryWrites=true')
 db = client['qhacks']
 collection_keywords = db['keywords']
 

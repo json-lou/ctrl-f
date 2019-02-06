@@ -45,7 +45,7 @@ def draw_boxes(image, bounds, color):
 
 def get_document_bounds(videoIO, feature, folderPath, youtube_id):
 
-    client = MongoClient('mongodb+srv://qhacks:qhacks@cluster0-brdw1.mongodb.net/test?retryWrites=true')
+    client = MongoClient('mongodb+srv://qhacks:<PASSWORD>@cluster0-brdw1.mongodb.net/test?retryWrites=true')
     db = client['qhacks']
 
     global notes_screenshots
@@ -293,10 +293,3 @@ if __name__ == '__main__':
     #print(len(glob_data))
 
     # render_doc_text(args.detect_file, args.out_file)
-
-
-
-
-
-
-

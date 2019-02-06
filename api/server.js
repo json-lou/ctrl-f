@@ -3,7 +3,8 @@ const app = express();
 const PORT = 3001;
 const mongo = require('mongodb');
 const MongoClient = mongo.MongoClient;
-var url = "mongodb+srv://qhacks:qhacks@cluster0-brdw1.mongodb.net/test?retryWrites=true";
+// insert password
+var url = "mongodb+srv://qhacks:<PASSWORD>@cluster0-brdw1.mongodb.net/test?retryWrites=true"
 var db;
 
 MongoClient.connect(url, function(err, client) {
